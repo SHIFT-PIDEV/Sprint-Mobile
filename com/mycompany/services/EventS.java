@@ -15,7 +15,6 @@ import com.company.entities.Event;
 import com.company.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,15 +56,14 @@ public class EventS {
                 e.setIdE(((int)Float.parseFloat(obj.get("idevent").toString())));
                 e.setIdF(((int)Float.parseFloat(obj.get("idformateur").toString())));
                 e.setNomE(obj.get("nomevent").toString());
-                
-                /*DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
-                String strDate = dateFormat.format(obj.get("dateDebut"));  
-                System.out.println("Converted String: " + strDate);*/
                 e.setDateD( obj.get("datedebut").toString());
                 e.setHeure(((int)Float.parseFloat(obj.get("heure").toString())));
                 e.setDuree(((int)Float.parseFloat(obj.get("duree").toString())));
                 e.setDescE(obj.get("descevent").toString());
                 e.setImage(obj.get("pic").toString());
+                e.setLikesNumber(((int)Float.parseFloat(obj.get("likesNumber").toString())));
+                e.setInscriptionsNumber(((int)Float.parseFloat(obj.get("inscriptionsNumber").toString())));
+                                                                        
                 
                 //Ajouter la tâche extraite de la réponse Json à la liste
                 events.add(e);

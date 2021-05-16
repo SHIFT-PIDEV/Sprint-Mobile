@@ -23,7 +23,26 @@ public class Event {
     private float duree;
     private String descE;
     private String image;
-    public List<inscriView> listInscri; 
+    public List<inscriView> listInscri;
+    
+    private int likesNumber;
+    private int inscriptionsNumber;
+
+    public int getLikesNumber() {
+        return likesNumber;
+    }
+
+    public void setLikesNumber(int likesNumber) {
+        this.likesNumber = likesNumber;
+    }
+     public int getInscriptionsNumber() {
+        return inscriptionsNumber;
+    }
+
+    public void setInscriptionsNumber(int inscriptionsNumber) {
+        this.inscriptionsNumber = inscriptionsNumber;
+    }
+    
  
     public Event(){
         this.listInscri=new ArrayList<>();

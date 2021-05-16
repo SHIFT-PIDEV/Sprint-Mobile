@@ -56,8 +56,7 @@ class AllEvents extends Form {
         Label eventTime=new Label("Time "+e.getHeure()+"h");
         Button details=new Button("view Details");
         details.addActionListener(l->{
-            EventDetails ed=new EventDetails();
-            ed.event=e;
+            EventDetails ed=new EventDetails("Details",e);
             ed.show();
         });
         c.addAll(iv,eventName,eventDate,eventTime,details);

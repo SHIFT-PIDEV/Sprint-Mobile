@@ -12,7 +12,6 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.company.entities.Client;
-import com.company.entities.Event;
 import com.company.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class ClientS {
                 //Création des tâches et récupération de leurs données
                 
                 Client c = new Client();
-                
+                c.setId(((int)Float.parseFloat(obj.get("id").toString())));
                 c.setNom(obj.get("nom").toString());
                 c.setPrenom(obj.get("prenom").toString());
                 c.setUserName(obj.get("username").toString());
