@@ -7,6 +7,8 @@ package com.company.gui;
 
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
+import static com.codename1.ui.Component.CENTER;
+import static com.codename1.ui.Component.TOP;
 import com.codename1.ui.Container;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
@@ -24,16 +26,15 @@ import java.util.ArrayList;
  *
  * @author asus
  */
-class AllEvents extends Form {
-    
-    public AllEvents(String title){
+public class MyEvents extends Form {
+   public MyEvents(String title){
         super(title);
         this.setLayout(new FlowLayout(TOP,CENTER));
         Container bigContainer=new Container(BoxLayout.y());
         
         ArrayList<Event> eventsList=new ArrayList();
         EventS es=EventS.getInstance();
-        eventsList=es.getAllEvents();
+        eventsList=es.myEvents(Login.client.getId());
         for(Event e:eventsList){
             Container c=new Container(BoxLayout.y());
         
@@ -49,13 +50,9 @@ class AllEvents extends Form {
             System.out.println(ex.getMessage());
         }
         //**********
-        this.getToolbar().addCommandToRightBar("My Events", null, t->{
-            MyEvents myE=new MyEvents("My Events");
-            myE.show();
-        });
-         this.getToolbar().addCommandToLeftBar("Back", null, t->{
-            HomeForm myE=new HomeForm("Home");
-            myE.show();
+        this.getToolbar().addCommandToLeftBar("Back", null, t->{
+            AllEvents allE=new AllEvents("Events");
+            allE.show();
         });
         Label eventName=new Label("Event Name: "+e.getNomE());
         Label eventDate=new Label("Date : "+e.getDateD());

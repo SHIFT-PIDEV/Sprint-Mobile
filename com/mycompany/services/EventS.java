@@ -91,5 +91,19 @@ public class EventS {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return events;
     }
+      public ArrayList<Event> myEvents(int idclient){
+        String url = Statics.BASE_URL+"/MyEventsJSON?idclient="+idclient;
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                events = parseEvents(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return events;
+    }
     
 }
