@@ -9,6 +9,7 @@ import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
+import static com.codename1.ui.CN.execute;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
@@ -184,9 +185,13 @@ private Slider createStarRankSlider() {
         hi.getToolbar().addComponentToSideMenu(inbox);
         
    
-       hi. getToolbar().addCommandToSideMenu("Examens", null, e -> {
+       hi.getToolbar().addCommandToSideMenu("Examens", null, e -> {
          displayExams a = new displayExams(res);
            a.hi.show();
+        });
+       hi.getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
+            execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+           
         });
 // 
 //       hi. getToolbar().addCommandToSideMenu("My Commande", null, e -> {

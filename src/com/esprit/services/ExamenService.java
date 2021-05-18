@@ -11,7 +11,11 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.MultipartRequest;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.io.rest.Response;
+import com.codename1.io.rest.Rest;
+import static com.codename1.ui.events.ActionEvent.Type.Response;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.util.Base64;
 import com.esprit.entities.Examen;
 import com.esprit.entities.InscripExam;
 import java.io.IOException;
@@ -112,7 +116,7 @@ public class ExamenService {
         return listExam;
 
     }
-    public void addinscri(InscripExam e) {
+    public void addinscri(InscripExam e ,Examen ex) {
         MultipartRequest con = new MultipartRequest();// création d'une nouvelle demande de connexion
         String Url = "http://127.0.0.1:8000/mobile/newinscri?" + "idexam=" + e.getIdExam()+ "&nom=" + e.getNom()+ "&prenom=" + e.getPrenom()+ "&email=" + e.getEmail() ;// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
@@ -123,6 +127,18 @@ public class ExamenService {
             System.out.println(str);//Affichage de la réponse serveur sur la console
 
         });
+        String accountSID = "AC9297b5cc7cb45284704e6c52bfe2d276";
+            String authToken = "33782479f0c741db1e90e166aea2bb84";
+            String fromPhone = "+18452503211";
+            String destinationPhone = "+21620823189";
+
+            Response<Map> SMS = Rest.post("https://api.twilio.com/2010-04-01/Accounts/" + accountSID + "/Messages.json").
+                    queryParam("To", destinationPhone).
+                    queryParam("From", fromPhone).
+                    queryParam("Body", "Bonjour  "+e.getNom()+" "+e.getPrenom() + " Votre inscription à l'examen "+ex.getTitreE()+" est validée avec succes :) !").
+                    header("Authorization", "Basic " + Base64.encodeNoNewline((accountSID + ":" + authToken).getBytes())).
+                    getAsJsonMap();
+            
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
     }
 }
