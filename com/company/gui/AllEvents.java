@@ -37,7 +37,6 @@ class AllEvents extends Form {
         eventsList=es.getAllEvents();
         for(Event e:eventsList){
             Container c=new Container(BoxLayout.y());
-        //c.setLayout(new FlowLayout(CENTER,CENTER));
         
         //récuperer l image de l event
         ImageViewer iv=null;

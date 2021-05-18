@@ -11,7 +11,7 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
-import com.company.entities.InscriEvent;
+import com.company.entities.Like;
 import com.company.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,26 +22,25 @@ import java.util.Map;
  *
  * @author asus
  */
-public class InscriEventS {
-    
-    public static InscriEventS instance=null;
+public class LikeS {
+     public static LikeS instance=null;
     public final ConnectionRequest req;
     public boolean resultOK;
-    public ArrayList<InscriEvent> inscris;
-    public InscriEventS(){
+    public ArrayList<Like> likes;
+    public LikeS(){
         this.req=new ConnectionRequest();
     }
     
-    public static InscriEventS getInstance(){
+    public static LikeS getInstance(){
         if( instance==null)
-                instance=new InscriEventS();
+                instance=new LikeS();
         return instance;
     }
     
-    public boolean sinscrire(InscriEvent i) {
+    public boolean addLike(int idClient,int idEvent) {
   
-         String url = Statics.BASE_URL + "/sinscrire/newInscriJSON?&idclient="+i.getIdClient()+ 
-                 "&idevent=" + i.getIdEvent(); //création de l'URL
+         String url = Statics.BASE_URL + "/addLikeJSON?&idclient="+idClient+ 
+                 "&idevent=" + idEvent; //création de l'URL
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -54,9 +53,25 @@ public class InscriEventS {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-    public ArrayList<InscriEvent> parseInscris(String jsonText){
+    public boolean deleteLike(int idClient,int idEvent) {
+  
+         String url = Statics.BASE_URL + "/deleteLikeJSON?&idclient="+idClient+ 
+                 "&idevent=" + idEvent; //création de l'URL
+        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+              
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+    public ArrayList<Like> parseLikes(String jsonText){
         try {
-            inscris=new ArrayList<>();
+            likes=new ArrayList<>();
             JSONParser j = new JSONParser();
            
             Map<String,Object> inscriListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
@@ -67,13 +82,9 @@ public class InscriEventS {
             for(Map<String,Object> obj : list){
                 //Création des tâches et récupération de leurs données
                 
-                InscriEvent ie = new InscriEvent();
-                
-                /*ie.setIdClient(((int)Float.parseFloat(obj.get("client").toString())));
-                ie.setIdEvent(((int)Float.parseFloat(obj.get("event").toString())));*/
-                ie.setIdinscri(((int)Float.parseFloat(obj.get("idinscri").toString())));
+                Like like = new Like();
                 //Ajouter la tâche extraite de la réponse Json à la liste
-                inscris.add(ie);
+                likes.add(like);
             }
             
             
@@ -81,21 +92,21 @@ public class InscriEventS {
             System.out.println(ex);
         }
          
-        return inscris;
+        return likes;
     }
      
-     public ArrayList<InscriEvent> getInscris(int idclient,int idevent){
-        String url = Statics.BASE_URL+"/sinscrire/testInscriExist/"+idclient+"/"+idevent;
+     public ArrayList<Like> getLikes(int idclient,int idevent){
+        String url = Statics.BASE_URL+"/like/testLikeExist/"+idclient+"/"+idevent;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                inscris = parseInscris(new String(req.getResponseData()));
+                likes = parseLikes(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return inscris;
+        return likes;
     }
 }

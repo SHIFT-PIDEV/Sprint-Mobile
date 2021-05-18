@@ -17,13 +17,22 @@ public class Commentaire {
     private int idClient;
     private int idEvent;
    // private Timestamp datecomm;
-    private Date datecomm;
+    private String datecomm;
     private String desc;
+    private String nameClient;
+
+    public String getNameClient() {
+        return nameClient;
+    }
+
+    public void setNameClient(String nameClient) {
+        this.nameClient = nameClient;
+    }
 
     public Commentaire() {
     }
 
-    public Commentaire(int idcomm, int idClient, int idEvent, Date dateInscri,String desc) {
+    public Commentaire(int idcomm, int idClient, int idEvent, String dateInscri,String desc) {
         this.idcomm = idcomm;
         this.idClient = idClient;
         this.idEvent = idEvent;
@@ -63,11 +72,11 @@ public class Commentaire {
         this.idEvent = idEvent;
     }
 
-    public Date getDatecomm() {
+    public String getDatecomm() {
         return datecomm;
     }
 
-    public void setDatecomm(Date datecomm) {
+    public void setDatecomm(String datecomm) {
         this.datecomm = datecomm;
     }
 
