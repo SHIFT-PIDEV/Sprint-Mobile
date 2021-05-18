@@ -6,59 +6,46 @@
 package com.esprit.GUI;
 
 import com.codename1.components.ImageViewer;
-import com.codename1.components.MultiButton;
 import com.codename1.ui.Button;
 import static com.codename1.ui.CN.execute;
 import com.codename1.ui.Container;
-import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.Slider;
-import com.codename1.ui.SwipeableContainer;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
-import com.codename1.ui.animations.CommonTransitions;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-import com.codename1.ui.geom.Dimension;
-import com.codename1.ui.geom.Rectangle;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
-import com.esprit.entities.Examen;
-import com.esprit.entities.InscripExam;
-import com.esprit.entities.RatingR;
-import com.esprit.services.ExamenService;
-import com.esprit.services.RatingService;
+import com.esprit.entities.Cour;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  *
  * @author mahdi
  */
-public class displayoneExam {
-     Form hi = new Form("", new BoxLayout(BoxLayout.Y_AXIS));
+public class displayoneCour {
+       Form hi = new Form("", new BoxLayout(BoxLayout.Y_AXIS));
     EncodedImage enc;
     Image imgs;
     ImageViewer imgv;
  private Resources theme;
 
   
-    public displayoneExam(Examen l,Resources res)
+    public displayoneCour(Cour l,Resources res)
     {
              
  
 //    String img=l.getImage_name();
-    String url="http://127.0.0.1:8000/frontoffice/assets/img/Exam.jpg";
+    String url="http://127.0.0.1:8000/images/cour/"+l.getImage_v();
    
         hi.getToolbar().setTitleComponent(
                 FlowLayout.encloseCenterMiddle(
-                        new Label(l.getTitreE(), "Title")
+                        new Label(l.getNom_cour(), "Title")
                         
                 )
         );
@@ -67,12 +54,12 @@ public class displayoneExam {
         hi.getToolbar().addCommandToLeftBar("Back ", res.getImage(""),new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent evt) {
-               displayExams a = new displayExams(res);
+               displayCours a = new displayCours(res);
                 a.hi.showBack();
          }
      });
        
-        TextArea popupBody = new TextArea("Titre: "+ l.getTitreE()+ "\n\n" +"Prix: "+ l.getPrixE()+" DT " + "\n\n"+ "Niveau: "+ l.getNiveau()+ "\n\n"  , 8, 12);
+        TextArea popupBody = new TextArea("Titre:"+ l.getNom_cour()+ "\n\n" +"prix:"+ l.getPrix()+"dinars" + "\n\n"+ "Niveau:"+ l.getNiveau()+ "\n\n" +"categorie:"+ l.getCategorie()+  "\n\n"+ "formateur:"+ l.getFormateur()+  "\n\n"+ "Description:"+ l.getDescription()+  "\n\n"  , 8, 12);
         popupBody.setEditable(false);
          try {
             enc = EncodedImage.create("/load.png");
@@ -99,76 +86,28 @@ public class displayoneExam {
         email.setHint("email");
         
         C1.add(popupBody);
-        C1.add(nom);
-        C1.add(prenom);
-        C1.add(email);
-         Button reserver = new Button("S'inscrire");
-          reserver.addActionListener(e -> {
+       // C1.add(nom);
+       // C1.add(prenom);
+       // C1.add(email);
+       //  Button reserver = new Button("S'inscrire");
+       //   reserver.addActionListener(e -> {
               // System.out.println("dfsgdhfjgkhg");
-              ExamenService sU= new ExamenService();
-              InscripExam u= new InscripExam(l.getIdE(), nom.getText(), prenom.getText(), email.getText());
-              sU.addinscri(u,l);
-              nom.clear();
-              prenom.clear();
-              email.clear();
-              Dialog.show("Examens Notif", "Inscription éffectué avec succée !", "ok", null);
-        });
+           //   ExamenService sU= new ExamenService();
+            //  InscripExam u= new InscripExam(l.getIdE(), nom.getText(), prenom.getText(), email.getText());
+            //  sU.addinscri(u);
+             // nom.clear();
+             // prenom.clear();
+              //email.clear();
+              //Dialog.show("Examens Notif", "Inscription éffectué avec succée !", "ok", null);
+       // });
         Container C2= new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        Container C3= new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        C3.add("Les commentaires de l'examen \n"+l.getTitreE()+" : \n");
-        String rate="";
-        RatingService rs = new RatingService();
-
-        ArrayList<RatingR> list = rs.getListrating();
-        for (RatingR r : list) {
-            if(r.getIdExam()==l.getIdE())
-            {
-                
-            
-             if(r.getRate()==0)
-        {
-           rate=r.getRate()+" étoiles"; 
-        }
-        else if(r.getRate()==1)
-        {
-              rate=r.getRate()+" étoiles"; 
-        }
-        else if(r.getRate()==2)
-        {
-              rate=r.getRate()+" étoiles"; 
-        }
-        else if(r.getRate()==3)
-        {
-            rate=r.getRate()+" étoiles"; 
-        }
-        else if(r.getRate()==4)
-        {
-              rate=r.getRate()+" étoiles"; 
-        }
-           // C3.add(createRankWidgetR(r, r.getIdClient(),r.getIdExam(), r.getIdR(),r.getCommentaire(), r.getRate(), res));
-           TextArea bodyr = new TextArea(". Commentaire : "+ l.getTitreE()+ "\n\n" +". Rate : "+rate , 8, 8);
-            popupBody.setEditable(false);
-           C3.add(bodyr); 
-        }
-        }
-        Button commenter = new Button("Commenter");
-          commenter.addActionListener(e -> {
-              AddComment ac= new AddComment(l,res);
-               ac.hi.show();
-              
-        });
-        
         C2.add(imgv);
        hi.add(C2);
       hi.add(C1);
-      hi.add(reserver);
-      hi.add(C3);
-      hi.add(commenter);
+     // hi.add(reserver);
        
        hi.show();   
     }
-    
-    
      public void installSidemenu(Resources res) {
         Image selection = res.getImage("selection-in-sidemenu.png");
         
@@ -228,5 +167,5 @@ public class displayoneExam {
     protected boolean isCurrentStats() {
         return false;
     }
-  
+        
 }

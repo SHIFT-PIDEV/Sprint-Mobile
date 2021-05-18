@@ -96,6 +96,12 @@ public class BaseForm extends Form {
           execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
           
         });
+        getToolbar().addCommandToSideMenu("Cours", null, e -> {
+            displayCours dc= new displayCours(res);
+        });
+         getToolbar().addCommandToSideMenu("Packages", null, e -> {
+            displayPackages dc= new displayPackages(res);
+        });
         
       /////////////////////////////////  
         getToolbar().addCommandToSideMenu("Map", null, e -> {});

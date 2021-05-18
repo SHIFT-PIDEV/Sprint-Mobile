@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class ExamenService {
     public ArrayList<Examen> tasks;
+    public ArrayList<Examen> exams;
    
 
     ArrayList<Examen> listExam = new ArrayList<>();
@@ -118,45 +119,6 @@ public class ExamenService {
 
     }
     
-    
-    
-    
-     public ArrayList<Examen> ExamParseoneJson(String json) throws ParseException {
-
-        ArrayList<Examen> listex = new ArrayList<>();
-
-        try {
-            JSONParser j = new JSONParser();
-
-            Map<String, Object> experiences = j.parseJSON(new CharArrayReader(json.toCharArray()));
-
-            List<Map<String, Object>> listt = (List<Map<String, Object>>) experiences.get("root");
-
-            for (Map<String, Object> obj : listt) {
-
-                Examen e = new Examen();
-               // float id = Float.parseFloat(obj.get("idExperience").toString());
-              
-                float id = Float.parseFloat(obj.get("id").toString());
-                float prix = Float.parseFloat(obj.get("prix").toString());
-
-                e.setIdE((int) id);
-                e.setTitreE(obj.get("titre").toString());
-                e.setDate(obj.get("date").toString());
-                e.setNiveau(obj.get("niveau").toString());
-                e.setPrixE((int) prix);
-                e.setSupport((String) obj.get("support"));
-                 
-                listex.add(e);
-
-            }
-
-        } catch (IOException ex) {
-        }
-        System.out.println(listex);
-        return listex;
-    }
-     
      public ArrayList<Examen> getListexamenR(String q) {
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://127.0.0.1:8000/mobile/rechexam?"+"titre"+q);
@@ -164,9 +126,9 @@ public class ExamenService {
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                ExamenService sl = new ExamenService();
+              
                 try {
-                    listExamR = sl.ExamParseoneJson(new String(con.getResponseData()));
+                    exams=ExamParseJson(new String(con.getResponseData()));
                 } catch (ParseException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -174,10 +136,9 @@ public class ExamenService {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return listExamR;
-    
-    }
-    
+        return exams;
+        }
+        
     
     ////////////////////////////inscription examens ///////////////////////
     public void addinscri(InscripExam e ,Examen ex) {

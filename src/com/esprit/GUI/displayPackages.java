@@ -5,7 +5,6 @@
  */
 package com.esprit.GUI;
 
-import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
@@ -16,14 +15,11 @@ import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.List;
 import com.codename1.ui.Slider;
 import com.codename1.ui.SwipeableContainer;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.animations.CommonTransitions;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Rectangle;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -31,73 +27,75 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.esprit.entities.Examen;
-import com.esprit.services.ExamenService;
+import com.esprit.entities.Packge;
+import com.esprit.services.PackageService;
 import java.util.ArrayList;
 
 /**
  *
  * @author mahdi
  */
-public class displayExams {
-
-    public static int idu = 3;
-    public static int idl = 0;
+public class displayPackages {
+      public static int idu=3;
+    public static int idl=0;
     Form hi = new Form("", new BoxLayout(BoxLayout.Y_AXIS));
 //h.add(lb);
-
-    public displayExams(Resources res) {
-
+  public displayPackages(Resources res) {
+ 
+ 
+        
         hi.getToolbar().setTitleComponent(
                 FlowLayout.encloseCenterMiddle(
-                        new Label("Examens", "Title")
+                        new Label("Packages", "Title")
+                        
                 )
         );
-
         installSidemenu(res);
-        Container C1 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        TextField search = new TextField();
-        String s = search.getText();
-        Button rech = new Button("Rechercher");
-        rech.addActionListener(ee -> {
-            displayexamsAfterR de = new displayexamsAfterR(res, s);
-            de.hi.show();
+        TextField search=new TextField();
+        
+       
+        PackageService serviceTask = new   PackageService();
+      
 
-        });
-        C1.add(search);
-        C1.add(rech);
-        hi.add(C1);
-
-        ExamenService serviceTask = new ExamenService();
-
-        ArrayList<Examen> list = serviceTask.getListExamen();
-        for (Examen l : list) {
-            hi.add(createRankWidget(l, l.getIdE(), l.getTitreE(), l.getNiveau(), l.getPrixE(), l.getSupport(), res));
-            hi.showBack();
-        }
-
+     ArrayList<Packge> list = serviceTask.getListPack();
+          for (Packge l:list)
+      {
+        // String img=l.getImage_name();
+  //Image Image = res.getImage("/"+img);
+//        Image.scaledSmallerRatio(20, 20);
+       // ImageViewer imgv = new ImageViewer(Image);
+      //  System.out.println(Image);
+        //  addItem(l);
+     
+    
+hi.add(createRankWidget(l,l.getId(),l.getNompackage(),l.getNbr_cour(),l.getPrix(),res));
+ hi.showBack();
     }
-
-    public SwipeableContainer createRankWidget(Examen l, int id, String titre, String niveau, float prix, String support, Resources res) {
-        MultiButton button = new MultiButton(titre);
-        Button reserver = new Button("s'inscrir");
+    
+  }
+  
+     public SwipeableContainer createRankWidget(Packge l,int id,String titre, int nbcours,float prix,Resources res) {
+            MultiButton button = new MultiButton(titre);  
         //add(reserver);
+    
 
+      
         button.setHeight(100);
 
         //button.setIcon(Image);
         button.setTextLine1(titre);
-        button.setTextLine2(niveau);
+        button.setTextLine2("nombre de cour :"  +nbcours);
         button.setTextLine3("" + prix);
-
-        //button.setTextLine4(Contenu);
-        button.addActionListener(e -> {
-
-            displayoneExam a = new displayoneExam(l, res);
-
-            //dialog(l,res);
-        });
-
+        
+             
+         //button.setTextLine4(Contenu);
+         button.addActionListener(e->{
+            
+              displayonePack a = new displayonePack(l,res);
+         
+             //dialog(l,res);
+         });
+          
 //        reserver.addActionListener(e -> {
 //         
 //           // System.out.println(idl);
@@ -106,37 +104,35 @@ public class displayExams {
 //            se.Commender(id);
 //            Dialog.show("Sign In", "your book "+name+"has been ordered", "ok", null);
 //        });
-        return new SwipeableContainer(FlowLayout.encloseCenterMiddle(createStarRankSlider()),
-                button);
-    }
+       
+    return new SwipeableContainer(FlowLayout.encloseCenterMiddle(createStarRankSlider()), 
+            button);
+}
+private Slider createStarRankSlider() {
+    Slider starRank = new Slider();
 
-    private Slider createStarRankSlider() {
-        Slider starRank = new Slider();
-
-        return starRank;
-    }
-
-    private void initStarRankStyle(Style s, Image star) {
-        s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);
-        s.setBorder(Border.createEmpty());
-        s.setBgImage(star);
-        s.setBgTransparency(0);
-    }
-
-    private void dialog(Examen e, Resources res) {
-
-        Dialog d = new Dialog(e.getTitreE());
-        // String img=e.getImage_name();
-        TextArea popupBody = new TextArea(e.getTitreE() + "\n" + e.getNiveau() + "\n" + e.getPrixE() + "\n", 8, 12);
-
+     return starRank;
+}
+   private void initStarRankStyle(Style s, Image star) {
+    s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);
+    s.setBorder(Border.createEmpty());
+    s.setBgImage(star);
+    s.setBgTransparency(0);
+}
+       private void dialog(Packge e,Resources res) {
+       
+        Dialog d = new Dialog(e.getNompackage());
+       // String img=e.getImage_name();
+        TextArea popupBody = new TextArea( e.getNompackage()+ "\n" + e.getNbr_cour()+ "\n" + e.getPrix()+ "\n" , 8, 12);
+  
         popupBody.setUIID("Label");
         popupBody.setEditable(false);
         Button b = new Button("test");
         d.setLayout(new BorderLayout());
-
+        
         d.addComponent(BorderLayout.CENTER, popupBody);
-        //  d.add(BorderLayout.SOUTH,imgv);
-
+      //  d.add(BorderLayout.SOUTH,imgv);
+   
         d.setTransitionInAnimator(CommonTransitions.createEmpty());
         d.setTransitionOutAnimator(CommonTransitions.createFade(300));
         Rectangle rec = new Rectangle();
@@ -144,55 +140,49 @@ public class displayExams {
         rec.setY(1000);
         d.showPopupDialog(rec);
     }
-
-    private void notif() {
-        LocalNotification n = new LocalNotification();
+        private void notif()
+  {
+         LocalNotification n = new LocalNotification();
         n.setId("demo-notification");
         n.setAlertBody("your book has been added to your Order list");
         n.setAlertTitle("Order added!");
         n.setAlertSound("/notification_sound_bells.mp3"); //file name must begin with notification_sound
 
+
         Display.getInstance().scheduleLocalNotification(
                 n,
                 System.currentTimeMillis() + 10 * 1000, // fire date/time
-                LocalNotification.REPEAT_MINUTE // Whether to repeat and what frequency
+                LocalNotification.REPEAT_MINUTE  // Whether to repeat and what frequency
         );
-    }
+  }
 
     public void installSidemenu(Resources res) {
         Image selection = res.getImage("selection-in-sidemenu.png");
-
+        
         Image inboxImage = null;
-        if (isCurrentInbox()) {
-            inboxImage = selection;
-        }
+        if(isCurrentInbox()) inboxImage = selection;
 
         Image trendingImage = null;
-        if (isCurrentTrending()) {
-            trendingImage = selection;
-        }
-
+        if(isCurrentTrending()) trendingImage = selection;
+        
         Image calendarImage = null;
-        if (isCurrentCalendar()) {
-            calendarImage = selection;
-        }
-
+        if(isCurrentCalendar()) calendarImage = selection;
+        
         Image statsImage = null;
-        if (isCurrentStats()) {
-            statsImage = selection;
-        }
-
+        if(isCurrentStats()) statsImage = selection;
+        
         Button inboxButton = new Button("Inbox", inboxImage);
         inboxButton.setUIID("SideCommand");
         inboxButton.getAllStyles().setPaddingBottom(0);
-        Container inbox = FlowLayout.encloseMiddle(inboxButton,
+        Container inbox = FlowLayout.encloseMiddle(inboxButton, 
                 new Label("18", "SideCommandNumber"));
         inbox.setLeadComponent(inboxButton);
         inbox.setUIID("SideCommand");
         inboxButton.addActionListener(e -> new InboxForm().show());
         hi.getToolbar().addComponentToSideMenu(inbox);
-
-        hi.getToolbar().addCommandToSideMenu("Examens", null, e -> {
+        
+   
+       hi.getToolbar().addCommandToSideMenu("Examens", null, e -> {
             displayExams a = new displayExams(res);
             a.hi.show();
         });
@@ -250,13 +240,12 @@ public class displayExams {
 //          hi.   getToolbar().addCommandToSideMenu("LogOut", null, e -> {
 //                new SignInForm().showBack();
 //        });
-
+    
     }
-
-    protected boolean isCurrentInbox() {
+      protected boolean isCurrentInbox() {
         return false;
     }
-
+    
     protected boolean isCurrentTrending() {
         return false;
     }
