@@ -6,16 +6,11 @@
         <group>
             <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/BaseForm.java</file>
             <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/services/ExamenService.java</file>
-            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/load.png</file>
             <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/displayExams.java</file>
+            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/displayexamsAfterR.java</file>
             <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/displayoneExam.java</file>
             <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/entities/InscripExam.java</file>
             <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/upgardi/upgradi.java</file>
-            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/CalendarForm.java</file>
-            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/SignInForm.java</file>
-            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/entities/Examen.java</file>
-            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/WalkthruForm.java</file>
-            <file>file:/D:/--Etudes--/3eme/S2/PI-DEV/mobileJava/upgradiMobile/src/com/esprit/GUI/DetailsForm.java</file>
         </group>
     </open-files>
 </project-private>

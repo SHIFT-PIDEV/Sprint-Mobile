@@ -21,6 +21,7 @@ package com.esprit.GUI;
 
 import com.codename1.admob.AdMobManager;
 import com.codename1.ui.Button;
+import static com.codename1.ui.CN.execute;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
@@ -90,6 +91,10 @@ public class BaseForm extends Form {
                 displayExams de= new displayExams(res);
                de.hi.show();
            }
+        });
+       getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
+          execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+          
         });
         
       /////////////////////////////////  

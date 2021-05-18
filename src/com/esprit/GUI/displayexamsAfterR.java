@@ -5,7 +5,6 @@
  */
 package com.esprit.GUI;
 
-import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
@@ -16,14 +15,11 @@ import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.List;
 import com.codename1.ui.Slider;
 import com.codename1.ui.SwipeableContainer;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.animations.CommonTransitions;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Rectangle;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -39,14 +35,11 @@ import java.util.ArrayList;
  *
  * @author mahdi
  */
-public class displayExams {
-
-    public static int idu = 3;
-    public static int idl = 0;
-    Form hi = new Form("", new BoxLayout(BoxLayout.Y_AXIS));
+public class displayexamsAfterR {
+        Form hi = new Form("", new BoxLayout(BoxLayout.Y_AXIS));
 //h.add(lb);
 
-    public displayExams(Resources res) {
+    public displayexamsAfterR(Resources res, String s) {
 
         hi.getToolbar().setTitleComponent(
                 FlowLayout.encloseCenterMiddle(
@@ -57,20 +50,12 @@ public class displayExams {
         installSidemenu(res);
         Container C1 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
         TextField search = new TextField();
-        String s = search.getText();
-        Button rech = new Button("Rechercher");
-        rech.addActionListener(ee -> {
-            displayexamsAfterR de = new displayexamsAfterR(res, s);
-            de.hi.show();
 
-        });
-        C1.add(search);
-        C1.add(rech);
-        hi.add(C1);
+       
 
         ExamenService serviceTask = new ExamenService();
 
-        ArrayList<Examen> list = serviceTask.getListExamen();
+        ArrayList<Examen> list = serviceTask.getListexamenR(s);
         for (Examen l : list) {
             hi.add(createRankWidget(l, l.getIdE(), l.getTitreE(), l.getNiveau(), l.getPrixE(), l.getSupport(), res));
             hi.showBack();
@@ -80,8 +65,7 @@ public class displayExams {
 
     public SwipeableContainer createRankWidget(Examen l, int id, String titre, String niveau, float prix, String support, Resources res) {
         MultiButton button = new MultiButton(titre);
-        Button reserver = new Button("s'inscrir");
-        //add(reserver);
+      
 
         button.setHeight(100);
 
@@ -95,17 +79,9 @@ public class displayExams {
 
             displayoneExam a = new displayoneExam(l, res);
 
-            //dialog(l,res);
+           
         });
 
-//        reserver.addActionListener(e -> {
-//         
-//           // System.out.println(idl);
-//            Commande ser = new Commande();
-//            ServiceCommande se= new ServiceCommande();
-//            se.Commender(id);
-//            Dialog.show("Sign In", "your book "+name+"has been ordered", "ok", null);
-//        });
         return new SwipeableContainer(FlowLayout.encloseCenterMiddle(createStarRankSlider()),
                 button);
     }
@@ -200,49 +176,7 @@ public class displayExams {
             execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
 
         });
-// 
-//       hi. getToolbar().addCommandToSideMenu("My Commande", null, e -> {
-//         displayMycom a = new displayMycom(res);
-//            a.hi.show();
-//        });
-//        
-//       hi. getToolbar().addCommandToSideMenu("My Profile", null, e -> {
-//         displayProfile a = new displayProfile(res);
-//            a.hi.show();
-//        });
-//        
-//
-//            
-//       hi. getToolbar().addCommandToSideMenu("Publication", statsImage, e -> {
-//      
-//                new PublicationForm(res).show();
-//     
-//        });
-//         hi.   getToolbar().addCommandToSideMenu("Service", null, e -> {
-//         displayService a = new displayService(res);
-//           a.hi.show();
-//        });
-//        hi.     getToolbar().addCommandToSideMenu("Attestation", null, e -> {
-//            addAttestation m = new addAttestation(res);
-//           m.hi.show();
-//             });
-//             hi. getToolbar().addCommandToSideMenu("Reclamation", null, e -> {
-//            addReclamation x = new addReclamation(res);
-//           x.hi.show();
-//             });
-//      hi.  getToolbar().addCommandToSideMenu("Blog", calendarImage, e -> new BlogForm(res).show());
-//         
-//    hi.    getToolbar().addCommandToSideMenu("Event", null, e -> {
-//          displayEvent a = new displayEvent(res);
-//          a.hi.show();
-//        });
-//       hi. getToolbar().addCommandToSideMenu("Offre", null, e -> {
-//          displayOffre a = new displayOffre(res);
-//          a.hi.show();
-//        });
-//          hi.   getToolbar().addCommandToSideMenu("LogOut", null, e -> {
-//                new SignInForm().showBack();
-//        });
+
 
     }
 
@@ -261,4 +195,5 @@ public class displayExams {
     protected boolean isCurrentStats() {
         return false;
     }
+    
 }
