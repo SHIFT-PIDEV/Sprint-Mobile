@@ -86,20 +86,6 @@ class displayonePack {
         email.setHint("email");
         
         C1.add(popupBody);
-       // C1.add(nom);
-       // C1.add(prenom);
-       // C1.add(email);
-       //  Button reserver = new Button("S'inscrire");
-       //   reserver.addActionListener(e -> {
-              // System.out.println("dfsgdhfjgkhg");
-           //   ExamenService sU= new ExamenService();
-            //  InscripExam u= new InscripExam(l.getIdE(), nom.getText(), prenom.getText(), email.getText());
-            //  sU.addinscri(u);
-             // nom.clear();
-             // prenom.clear();
-              //email.clear();
-              //Dialog.show("Examens Notif", "Inscription éffectué avec succée !", "ok", null);
-       // });
         Container C2= new Container(new BoxLayout(BoxLayout.Y_AXIS));
         C2.add(imgv);
        hi.add(C2);

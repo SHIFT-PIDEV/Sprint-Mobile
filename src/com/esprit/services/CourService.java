@@ -61,12 +61,6 @@ public class CourService {
                 e.setImage_v((String) obj.get("img"));
                 
                 
-//                String dateStr = obj.get("date").toString();
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//                Date date = sdf.parse(dateStr);
-//                sdf = new SimpleDateFormat("dd.MM.yyyy");
-//                dateStr = sdf.format(date);
-//                System.out.println(dateStr);
 
                 listEx1.add(e);
                 
@@ -82,6 +76,26 @@ public class CourService {
     public ArrayList<Cour> getListCour() {
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://127.0.0.1:8000/mobile/cour");
+
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                CourService sl = new CourService();
+                try {
+                    listCou = sl.CouParseJson(new String(con.getResponseData()));
+                } catch (ParseException ex) {
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        System.out.println(listCou);
+        return listCou;
+
+    }
+        public ArrayList<Cour> getListCourTrier() {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://127.0.0.1:8000/mobile/coursTrier");
 
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override

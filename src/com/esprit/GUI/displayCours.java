@@ -53,6 +53,14 @@ public class displayCours {
         );
         installSidemenu(res);
         TextField search=new TextField();
+         Button rech = new Button("Trier");
+        rech.addActionListener(ee -> {
+            displaycoursAfter de = new displaycoursAfter(res);
+            de.hi.show();
+
+        });
+       // C1.add(search);
+        hi.add(rech);
         
        
         CourService serviceTask = new   CourService();
@@ -97,14 +105,7 @@ hi.add(createRankWidget(l,l.getId(),l.getNom_cour(),l.getNiveau(),l.getPrix(),l.
              //dialog(l,res);
          });
           
-//        reserver.addActionListener(e -> {
-//         
-//           // System.out.println(idl);
-//            Commande ser = new Commande();
-//            ServiceCommande se= new ServiceCommande();
-//            se.Commender(id);
-//            Dialog.show("Sign In", "your book "+name+"has been ordered", "ok", null);
-//        });
+
        
     return new SwipeableContainer(FlowLayout.encloseCenterMiddle(createStarRankSlider()), 
             button);
@@ -191,49 +192,7 @@ private Slider createStarRankSlider() {
             displayCours dc= new displayCours(res);
             dc.hi.show();
         });
-// 
-//       hi. getToolbar().addCommandToSideMenu("My Commande", null, e -> {
-//         displayMycom a = new displayMycom(res);
-//            a.hi.show();
-//        });
-//        
-//       hi. getToolbar().addCommandToSideMenu("My Profile", null, e -> {
-//         displayProfile a = new displayProfile(res);
-//            a.hi.show();
-//        });
-//        
-//
-//            
-//       hi. getToolbar().addCommandToSideMenu("Publication", statsImage, e -> {
-//      
-//                new PublicationForm(res).show();
-//     
-//        });
-//         hi.   getToolbar().addCommandToSideMenu("Service", null, e -> {
-//         displayService a = new displayService(res);
-//           a.hi.show();
-//        });
-//        hi.     getToolbar().addCommandToSideMenu("Attestation", null, e -> {
-//            addAttestation m = new addAttestation(res);
-//           m.hi.show();
-//             });
-//             hi. getToolbar().addCommandToSideMenu("Reclamation", null, e -> {
-//            addReclamation x = new addReclamation(res);
-//           x.hi.show();
-//             });
-//      hi.  getToolbar().addCommandToSideMenu("Blog", calendarImage, e -> new BlogForm(res).show());
-//         
-//    hi.    getToolbar().addCommandToSideMenu("Event", null, e -> {
-//          displayEvent a = new displayEvent(res);
-//          a.hi.show();
-//        });
-//       hi. getToolbar().addCommandToSideMenu("Offre", null, e -> {
-//          displayOffre a = new displayOffre(res);
-//          a.hi.show();
-//        });
-//          hi.   getToolbar().addCommandToSideMenu("LogOut", null, e -> {
-//                new SignInForm().showBack();
-//        });
+
     
     }
       protected boolean isCurrentInbox() {
