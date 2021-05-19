@@ -41,7 +41,7 @@ class AllEvents extends Form {
         ImageViewer iv=null;
         try{
              iv= new ImageViewer();
-               EncodedImage ec = EncodedImage.create("/load.jpg");
+               EncodedImage ec = EncodedImage.create("/load.jpg").scaledEncoded(1000, 500);
                 Image img = URLImage.createToStorage(ec,"http://127.0.0.1:8000/uploads/"+e.getImage(), 
                         "http://127.0.0.1:8000/uploads/"+e.getImage(), URLImage.RESIZE_SCALE);
                 iv.setImage(img);

@@ -35,52 +35,6 @@ import java.util.ArrayList;
 class EventDetails extends Form {
   public Event event; 
   
- /* public void sendMail(Client c) throws MessagingException{
-      
-            // mailing 
-        Properties prop = System.getProperties();
-        prop.put("mail.smtp.port", "587");
-         prop.put("mail.smtp.auth", true);
-         prop.put("mail.smtp.starttls.enable", "true");
-        Session newSession = Session.getDefaultInstance(prop, null);
-
-        String emailsubject="UPGRADI inscription valideé";
-        String emailbody="Bienvenue Mr/Mme "+c.getNom()+" "+c.getPrenom()+  
-                ", votre demande d'inscription a été acceptée pour l'event "+this.event.getNomE()+"  "+
-               "l'event sera le "+this.event.getDateD()+ " à "+this.event.getHeure()+" H";
-        Message message = new MimeMessage(newSession);
-        try {
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(c.getEmail()));
-        } catch (AddressException ex) {
-           //Logger.getLogger(InscriptionEController.class.getName()).log(Level.SEVERE, null, ex);
-           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText(null);
-        alert.setContentText("adresse mail non valide");
-        alert.show();
-        }
-
-         message.setSubject(emailsubject);
-
-         MimeBodyPart mimeBodyPart = new MimeBodyPart();
-         mimeBodyPart.setContent(emailbody, "text/html");
-
-          Multipart multipart = new MimeMultipart();
-          multipart.addBodyPart(mimeBodyPart);
-
-
-          message.setContent(multipart);
-
-           String fromuser ="hamdiskander5@gmail.com";
-           String pass ="skanderhamdi200998*";
-           String emailhost="smtp.gmail.com";
-           Transport transport =newSession.getTransport("smtp");
-           transport.connect(emailhost,fromuser,pass);
-           transport.sendMessage( message, message.getAllRecipients());
-           transport.close();
-           
-  }*/
-  
   public EventDetails(String title,Event e) {
       super(title);
       this.event=e;
@@ -93,7 +47,6 @@ class EventDetails extends Form {
       Container c3=new Container(BoxLayout.y());
       Container c4=new Container(BoxLayout.y());
       Container c5=new Container(BoxLayout.y());
-       
        //C1
         ImageViewer iv=null;
         try{
@@ -199,8 +152,17 @@ class EventDetails extends Form {
         ArrayList<Commentaire> commList=new ArrayList<>(); 
         commList=cs.getComms(this.event.getIdE());
         for(Commentaire c:commList){
-             c4.addAll(new Label(c.getNameClient())
-                     ,new Label(c.getDatecomm().substring(0,10))
+             ImageViewer clientPic=null;
+        try{
+             clientPic= new ImageViewer();
+               EncodedImage ec1 = EncodedImage.create("/load.jpg").scaledEncoded(220,150);
+                Image img = URLImage.createToStorage(ec1,"http://127.0.0.1:8000"+c.getPicClient(), 
+                        "http://127.0.0.1:8000"+c.getPicClient(), URLImage.RESIZE_SCALE);
+                clientPic.setImage(img);
+        }catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+             c4.addAll(clientPic,new Label(c.getNameClient()),new Label(c.getDatecomm().substring(0,10))
                      ,new Label(c.getDesc()),
                      new Label("---------------------------------------------------------")
              

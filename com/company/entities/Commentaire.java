@@ -20,6 +20,15 @@ public class Commentaire {
     private String datecomm;
     private String desc;
     private String nameClient;
+     private String picClient;
+
+    public String getPicClient() {
+        return picClient;
+    }
+
+    public void setPicClient(String picClient) {
+        this.picClient = picClient;
+    }
 
     public String getNameClient() {
         return nameClient;

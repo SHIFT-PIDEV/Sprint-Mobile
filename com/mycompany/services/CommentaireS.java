@@ -59,6 +59,7 @@ public class CommentaireS {
                 c.setDesc(obj.get("desccomm").toString());
                 c.setDatecomm(obj.get("datecomm").toString());
                 c.setNameClient(obj.get("nameUser").toString());
+                c.setPicClient(obj.get("picUser").toString());
                 //Ajouter la tâche extraite de la réponse Json à la liste
                 comms.add(c);
             }
