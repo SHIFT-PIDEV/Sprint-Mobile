@@ -5,18 +5,15 @@
  */
 package com.esprit.GUI;
 
-import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
-import static com.codename1.ui.CN.execute;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.List;
 import com.codename1.ui.Slider;
 import com.codename1.ui.SwipeableContainer;
 import com.codename1.ui.TextArea;
