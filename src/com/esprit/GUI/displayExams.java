@@ -58,13 +58,13 @@ public class displayExams {
         Container C1 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
         TextField search = new TextField();
         String s = search.getText();
-        Button rech = new Button("Rechercher");
+        Button rech = new Button("Trier");
         rech.addActionListener(ee -> {
             displayexamsAfterR de = new displayexamsAfterR(res, s);
             de.hi.show();
 
         });
-        C1.add(search);
+       // C1.add(search);
         C1.add(rech);
         hi.add(C1);
 

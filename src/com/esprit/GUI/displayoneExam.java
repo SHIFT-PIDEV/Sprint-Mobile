@@ -6,26 +6,21 @@
 package com.esprit.GUI;
 
 import com.codename1.components.ImageViewer;
-import com.codename1.components.MultiButton;
+import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
 import static com.codename1.ui.CN.execute;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.Slider;
-import com.codename1.ui.SwipeableContainer;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
-import com.codename1.ui.animations.CommonTransitions;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-import com.codename1.ui.geom.Dimension;
-import com.codename1.ui.geom.Rectangle;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
@@ -155,6 +150,9 @@ public class displayoneExam {
           commenter.addActionListener(e -> {
               AddComment ac= new AddComment(l,res);
                ac.hi.show();
+//                com.codename1.messaging.Message m = new com.codename1.messaging.Message("");
+//                                 Display.getInstance().sendMessage(new String[] {"youssefelmahdi.bouchouicha@esprit.tn"}, "Menus", m);
+           
               
         });
         
@@ -168,7 +166,21 @@ public class displayoneExam {
        hi.show();   
     }
     
-    
+          private void notif()
+  {
+         LocalNotification n = new LocalNotification();
+        n.setId("demo-notification");
+        n.setAlertBody("your book has been added to your Order list");
+        n.setAlertTitle("Order added!");
+        n.setAlertSound("/notification_sound_bells.mp3"); //file name must begin with notification_sound
+
+
+        Display.getInstance().scheduleLocalNotification(
+                n,
+                System.currentTimeMillis() + 10 * 1000, // fire date/time
+                LocalNotification.REPEAT_MINUTE  // Whether to repeat and what frequency
+        );
+  }
      public void installSidemenu(Resources res) {
         Image selection = res.getImage("selection-in-sidemenu.png");
         

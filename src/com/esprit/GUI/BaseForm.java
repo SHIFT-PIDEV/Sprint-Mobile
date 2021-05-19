@@ -102,6 +102,15 @@ public class BaseForm extends Form {
          getToolbar().addCommandToSideMenu("Packages", null, e -> {
             displayPackages dc= new displayPackages(res);
         });
+           getToolbar().addCommandToSideMenu("Demande", null, e -> {
+              displayDemande dc= new displayDemande(res);
+        });
+             getToolbar().addCommandToSideMenu("Reclamtion", null, e -> {
+              displayReclamation dc= new displayReclamation(res);
+        });
+          getToolbar().addCommandToSideMenu("Panier", null, e -> {
+              displayPanier dc= new displayPanier(res);
+        });
         
       /////////////////////////////////  
         getToolbar().addCommandToSideMenu("Map", null, e -> {});

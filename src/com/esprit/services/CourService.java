@@ -91,5 +91,25 @@ public class CourService {
         return listCou;
 
     }
+     public ArrayList<Cour> getListCourTrier() {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://127.0.0.1:8000/mobile/coursTrier");
+
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                CourService sl = new CourService();
+                try {
+                    listCou = sl.CouParseJson(new String(con.getResponseData()));
+                } catch (ParseException ex) {
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        System.out.println(listCou);
+        return listCou;
+
+    }
     
 }

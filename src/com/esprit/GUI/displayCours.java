@@ -52,7 +52,14 @@ public class displayCours {
         );
         installSidemenu(res);
         TextField search=new TextField();
-        
+        Button rech = new Button("Trier");
+        rech.addActionListener(ee -> {
+            displaycoursAfter de = new displaycoursAfter(res);
+            de.hi.show();
+
+        });
+       // C1.add(search);
+        hi.add(rech);
        
         CourService serviceTask = new   CourService();
       

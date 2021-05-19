@@ -55,7 +55,7 @@ public class displayexamsAfterR {
 
         ExamenService serviceTask = new ExamenService();
 
-        ArrayList<Examen> list = serviceTask.getListexamenR(s);
+        ArrayList<Examen> list = serviceTask.getListexamenASC();
         for (Examen l : list) {
             hi.add(createRankWidget(l, l.getIdE(), l.getTitreE(), l.getNiveau(), l.getPrixE(), l.getSupport(), res));
             hi.showBack();

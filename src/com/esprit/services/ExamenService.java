@@ -119,24 +119,24 @@ public class ExamenService {
 
     }
     
-     public ArrayList<Examen> getListexamenR(String q) {
+     public ArrayList<Examen> getListexamenASC() {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://127.0.0.1:8000/mobile/rechexam?"+"titre"+q);
+        con.setUrl("http://127.0.0.1:8000/mobile/examTrier");
 
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-              
+                ExamenService sl = new ExamenService();
                 try {
-                    exams=ExamParseJson(new String(con.getResponseData()));
+                    listExam = sl.ExamParseJson(new String(con.getResponseData()));
                 } catch (ParseException ex) {
-                    System.out.println(ex.getMessage());
                 }
 
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return exams;
+        System.out.println(listExam);
+        return listExam;
         }
         
     
