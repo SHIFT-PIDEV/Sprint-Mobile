@@ -23,6 +23,9 @@ public class InscripExam {
      private String prenom;
       private String email;
 
+    public InscripExam() {
+    }
+
     public int getIdinscri() {
         return idinscri;
     }

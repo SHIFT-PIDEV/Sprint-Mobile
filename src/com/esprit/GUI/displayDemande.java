@@ -169,7 +169,7 @@ public class displayDemande {
             statsImage = selection;
         }
 
-        Button inboxButton = new Button("Inbox", inboxImage);
+        Button inboxButton = new Button("Acceuil", inboxImage);
         inboxButton.setUIID("SideCommand");
         inboxButton.getAllStyles().setPaddingBottom(0);
         Container inbox = FlowLayout.encloseMiddle(inboxButton,
@@ -179,31 +179,28 @@ public class displayDemande {
         inboxButton.addActionListener(e -> new InboxForm().show());
         hi.getToolbar().addComponentToSideMenu(inbox);
 
-        hi.getToolbar().addCommandToSideMenu("Examens", null, e -> {
+         hi.getToolbar().addCommandToSideMenu("Examens", null, e -> {
             displayExams a = new displayExams(res);
             a.hi.show();
         });
-        hi.getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
-            execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
-
+         hi.getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
+            // execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+            displayMyExams dc = new displayMyExams(res);
         });
-
         hi.getToolbar().addCommandToSideMenu("Cours", null, e -> {
-            displayCours dc = new displayCours(res);
+            displayCours dc= new displayCours(res);
         });
-        hi.getToolbar().addCommandToSideMenu("Packages", null, e -> {
-            displayPackages dp = new displayPackages(res);
+         hi.getToolbar().addCommandToSideMenu("Packages", null, e -> {
+            displayPackages dc= new displayPackages(res);
         });
-        hi.getToolbar().addCommandToSideMenu("Reclamation", null, e -> {
-            displayReclamation dr = new displayReclamation(res);
+           hi.getToolbar().addCommandToSideMenu("Demande", null, e -> {
+              displayDemande dc= new displayDemande(res);
         });
-        hi.getToolbar().addCommandToSideMenu("Demande", null, e -> {
-            displayDemande dd = new displayDemande(res);
-
+             hi.getToolbar().addCommandToSideMenu("Reclamtion", null, e -> {
+              displayReclamation dc= new displayReclamation(res);
         });
-        hi.getToolbar().addCommandToSideMenu("Ajouter Demande", null, e -> {
-            AddDemande ad = new AddDemande(res);
-            ad.hi.show();
+          hi.getToolbar().addCommandToSideMenu("Panier", null, e -> {
+              displayPanier dc= new displayPanier(res);
         });
 
 

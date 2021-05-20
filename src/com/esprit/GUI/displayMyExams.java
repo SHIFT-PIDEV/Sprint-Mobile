@@ -5,25 +5,24 @@
  */
 package com.esprit.GUI;
 
-import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.notifications.LocalNotification;
+import com.codename1.ui.BrowserComponent;
 import com.codename1.ui.Button;
 import static com.codename1.ui.CN.execute;
+import com.codename1.ui.Component;
+import com.codename1.ui.ComponentGroup;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.List;
 import com.codename1.ui.Slider;
 import com.codename1.ui.SwipeableContainer;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.animations.CommonTransitions;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Rectangle;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -32,6 +31,7 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.esprit.entities.Examen;
+import com.esprit.entities.InscripExam;
 import com.esprit.services.ExamenService;
 import java.util.ArrayList;
 
@@ -39,124 +39,46 @@ import java.util.ArrayList;
  *
  * @author mahdi
  */
-public class displayExams {
+public class displayMyExams {
 
     public static int idu = 3;
     public static int idl = 0;
     Form hi = new Form("", new BoxLayout(BoxLayout.Y_AXIS));
 //h.add(lb);
 
-    public displayExams(Resources res) {
+    public displayMyExams(Resources res) {
 
         hi.getToolbar().setTitleComponent(
                 FlowLayout.encloseCenterMiddle(
-                        new Label("Examens", "Title")
+                        new Label("Mes Examens", "Title")
                 )
         );
 
         installSidemenu(res);
         Container C1 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+        Container C2 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
         TextField search = new TextField();
         String s = search.getText();
-        Button rech = new Button("Trier");
+        Button rech = new Button("Ovrir dans Chrome");
         rech.addActionListener(ee -> {
-            displayexamsAfterR de = new displayexamsAfterR(res, s);
-            de.hi.show();
-
+            execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
         });
-       // C1.add(search);
+        // C1.add(search);
         C1.add(rech);
-        hi.add(C1);
+        //Website  WORKING
+                BrowserComponent browser = new BrowserComponent();
+              
+                browser.setURL("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+                                       
+               
+                 //WEBSITE WORKING 
+               C2.setLayout(new BorderLayout());
+                C2.add(BorderLayout.CENTER, browser);
+                 hi.add(C1);
+                 hi.add(C2);
 
-        ExamenService serviceTask = new ExamenService();
+        hi.show();
 
-        ArrayList<Examen> list = serviceTask.getListExamen();
-        for (Examen l : list) {
-            hi.add(createRankWidget(l, l.getIdE(), l.getTitreE(), l.getNiveau(), l.getPrixE(), l.getSupport(), res));
-            hi.showBack();
-        }
-
-    }
-
-    public SwipeableContainer createRankWidget(Examen l, int id, String titre, String niveau, float prix, String support, Resources res) {
-        MultiButton button = new MultiButton(titre);
-        Button reserver = new Button("s'inscrir");
-        //add(reserver);
-
-        button.setHeight(100);
-
-        //button.setIcon(Image);
-        button.setTextLine1(titre);
-        button.setTextLine2(niveau);
-        button.setTextLine3("" + prix);
-
-        //button.setTextLine4(Contenu);
-        button.addActionListener(e -> {
-
-            displayoneExam a = new displayoneExam(l, res);
-
-            //dialog(l,res);
-        });
-
-//        reserver.addActionListener(e -> {
-//         
-//           // System.out.println(idl);
-//            Commande ser = new Commande();
-//            ServiceCommande se= new ServiceCommande();
-//            se.Commender(id);
-//            Dialog.show("Sign In", "your book "+name+"has been ordered", "ok", null);
-//        });
-        return new SwipeableContainer(FlowLayout.encloseCenterMiddle(createStarRankSlider()),
-                button);
-    }
-
-    private Slider createStarRankSlider() {
-        Slider starRank = new Slider();
-
-        return starRank;
-    }
-
-    private void initStarRankStyle(Style s, Image star) {
-        s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);
-        s.setBorder(Border.createEmpty());
-        s.setBgImage(star);
-        s.setBgTransparency(0);
-    }
-
-    private void dialog(Examen e, Resources res) {
-
-        Dialog d = new Dialog(e.getTitreE());
-        // String img=e.getImage_name();
-        TextArea popupBody = new TextArea(e.getTitreE() + "\n" + e.getNiveau() + "\n" + e.getPrixE() + "\n", 8, 12);
-
-        popupBody.setUIID("Label");
-        popupBody.setEditable(false);
-        Button b = new Button("test");
-        d.setLayout(new BorderLayout());
-
-        d.addComponent(BorderLayout.CENTER, popupBody);
-        //  d.add(BorderLayout.SOUTH,imgv);
-
-        d.setTransitionInAnimator(CommonTransitions.createEmpty());
-        d.setTransitionOutAnimator(CommonTransitions.createFade(300));
-        Rectangle rec = new Rectangle();
-        rec.setX(700);
-        rec.setY(1000);
-        d.showPopupDialog(rec);
-    }
-
-    private void notif() {
-        LocalNotification n = new LocalNotification();
-        n.setId("demo-notification");
-        n.setAlertBody("your book has been added to your Order list");
-        n.setAlertTitle("Order added!");
-        n.setAlertSound("/notification_sound_bells.mp3"); //file name must begin with notification_sound
-
-        Display.getInstance().scheduleLocalNotification(
-                n,
-                System.currentTimeMillis() + 10 * 1000, // fire date/time
-                LocalNotification.REPEAT_MINUTE // Whether to repeat and what frequency
-        );
     }
 
     public void installSidemenu(Resources res) {
@@ -201,19 +123,19 @@ public class displayExams {
             displayMyExams dc = new displayMyExams(res);
         });
         hi.getToolbar().addCommandToSideMenu("Cours", null, e -> {
-            displayCours dc= new displayCours(res);
+            displayCours dc = new displayCours(res);
         });
-         hi.getToolbar().addCommandToSideMenu("Packages", null, e -> {
-            displayPackages dc= new displayPackages(res);
+        hi.getToolbar().addCommandToSideMenu("Packages", null, e -> {
+            displayPackages dc = new displayPackages(res);
         });
-           hi.getToolbar().addCommandToSideMenu("Demande", null, e -> {
-              displayDemande dc= new displayDemande(res);
+        hi.getToolbar().addCommandToSideMenu("Demande", null, e -> {
+            displayDemande dc = new displayDemande(res);
         });
-             hi.getToolbar().addCommandToSideMenu("Reclamtion", null, e -> {
-              displayReclamation dc= new displayReclamation(res);
+        hi.getToolbar().addCommandToSideMenu("Reclamtion", null, e -> {
+            displayReclamation dc = new displayReclamation(res);
         });
-          hi.getToolbar().addCommandToSideMenu("Panier", null, e -> {
-              displayPanier dc= new displayPanier(res);
+        hi.getToolbar().addCommandToSideMenu("Panier", null, e -> {
+            displayPanier dc = new displayPanier(res);
         });
 // 
 //       hi. getToolbar().addCommandToSideMenu("My Commande", null, e -> {

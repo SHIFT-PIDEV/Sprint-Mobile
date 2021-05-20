@@ -67,12 +67,7 @@ public class displayCours {
      ArrayList<Cour> list = serviceTask.getListCour();
           for (Cour l:list)
       {
-        // String img=l.getImage_name();
-  //Image Image = res.getImage("/"+img);
-//        Image.scaledSmallerRatio(20, 20);
-       // ImageViewer imgv = new ImageViewer(Image);
-      //  System.out.println(Image);
-        //  addItem(l);
+       
      
     
 hi.add(createRankWidget(l,l.getId(),l.getNom_cour(),l.getNiveau(),l.getPrix(),l.getFormateur(),res));
@@ -178,7 +173,7 @@ private Slider createStarRankSlider() {
         Image statsImage = null;
         if(isCurrentStats()) statsImage = selection;
         
-        Button inboxButton = new Button("Inbox", inboxImage);
+        Button inboxButton = new Button("Acceuil", inboxImage);
         inboxButton.setUIID("SideCommand");
         inboxButton.getAllStyles().setPaddingBottom(0);
         Container inbox = FlowLayout.encloseMiddle(inboxButton, 
@@ -193,61 +188,26 @@ private Slider createStarRankSlider() {
             displayExams a = new displayExams(res);
             a.hi.show();
         });
-        hi.getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
-            execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
-
+       hi.getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
+            // execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+            displayMyExams dc = new displayMyExams(res);
         });
-         
         hi.getToolbar().addCommandToSideMenu("Cours", null, e -> {
             displayCours dc= new displayCours(res);
         });
          hi.getToolbar().addCommandToSideMenu("Packages", null, e -> {
             displayPackages dc= new displayPackages(res);
         });
-// 
-//       hi. getToolbar().addCommandToSideMenu("My Commande", null, e -> {
-//         displayMycom a = new displayMycom(res);
-//            a.hi.show();
-//        });
-//        
-//       hi. getToolbar().addCommandToSideMenu("My Profile", null, e -> {
-//         displayProfile a = new displayProfile(res);
-//            a.hi.show();
-//        });
-//        
-//
-//            
-//       hi. getToolbar().addCommandToSideMenu("Publication", statsImage, e -> {
-//      
-//                new PublicationForm(res).show();
-//     
-//        });
-//         hi.   getToolbar().addCommandToSideMenu("Service", null, e -> {
-//         displayService a = new displayService(res);
-//           a.hi.show();
-//        });
-//        hi.     getToolbar().addCommandToSideMenu("Attestation", null, e -> {
-//            addAttestation m = new addAttestation(res);
-//           m.hi.show();
-//             });
-//             hi. getToolbar().addCommandToSideMenu("Reclamation", null, e -> {
-//            addReclamation x = new addReclamation(res);
-//           x.hi.show();
-//             });
-//      hi.  getToolbar().addCommandToSideMenu("Blog", calendarImage, e -> new BlogForm(res).show());
-//         
-//    hi.    getToolbar().addCommandToSideMenu("Event", null, e -> {
-//          displayEvent a = new displayEvent(res);
-//          a.hi.show();
-//        });
-//       hi. getToolbar().addCommandToSideMenu("Offre", null, e -> {
-//          displayOffre a = new displayOffre(res);
-//          a.hi.show();
-//        });
-//          hi.   getToolbar().addCommandToSideMenu("LogOut", null, e -> {
-//                new SignInForm().showBack();
-//        });
-    
+           hi.getToolbar().addCommandToSideMenu("Demande", null, e -> {
+              displayDemande dc= new displayDemande(res);
+        });
+             hi.getToolbar().addCommandToSideMenu("Reclamtion", null, e -> {
+              displayReclamation dc= new displayReclamation(res);
+        });
+          hi.getToolbar().addCommandToSideMenu("Panier", null, e -> {
+              displayPanier dc= new displayPanier(res);
+        });
+
     }
       protected boolean isCurrentInbox() {
         return false;

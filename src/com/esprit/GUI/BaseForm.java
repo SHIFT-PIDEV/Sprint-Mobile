@@ -68,7 +68,7 @@ public class BaseForm extends Form {
         Image statsImage = null;
         if(isCurrentStats()) statsImage = selection;
         
-        Button inboxButton = new Button("Inbox", inboxImage);
+        Button inboxButton = new Button("Acceuil", inboxImage);
         inboxButton.setUIID("SideCommand");
         inboxButton.getAllStyles().setPaddingBottom(0);
         Container inbox = FlowLayout.encloseMiddle(inboxButton, 
@@ -93,8 +93,8 @@ public class BaseForm extends Form {
            }
         });
        getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
-          execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
-          
+            // execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+            displayMyExams dc = new displayMyExams(res);
         });
         getToolbar().addCommandToSideMenu("Cours", null, e -> {
             displayCours dc= new displayCours(res);
@@ -112,11 +112,7 @@ public class BaseForm extends Form {
               displayPanier dc= new displayPanier(res);
         });
         
-      /////////////////////////////////  
-        getToolbar().addCommandToSideMenu("Map", null, e -> {});
-        getToolbar().addCommandToSideMenu("Trending", trendingImage, e -> new TrendingForm(res).show());
-        getToolbar().addCommandToSideMenu("Settings", null, e -> {});
-        
+     
         // spacer
         getToolbar().addComponentToSideMenu(new Label(" ", "SideCommand"));
         getToolbar().addComponentToSideMenu(new Label(res.getImage("profile_image.png"), "Container"));

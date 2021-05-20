@@ -35,7 +35,7 @@ import java.util.Map;
 public class ExamenService {
     public ArrayList<Examen> tasks;
     public ArrayList<Examen> exams;
-   
+    ArrayList<InscripExam> listi = new ArrayList<>();
 
     ArrayList<Examen> listExam = new ArrayList<>();
     ArrayList<Examen> listExamR = new ArrayList<>();
@@ -56,9 +56,9 @@ public class ExamenService {
 
                 Examen e = new Examen();
                 // float id = Float.parseFloat(obj.get("idExperience").toString());
-               DateFormat df = new SimpleDateFormat("yyyy-MM-dd");  
+               //DateFormat df = new SimpleDateFormat("yyyy-MM-dd");  
               // String s= df.format(obj.get("date"));
-               String t=obj.get("date").toString();
+              // String t=obj.get("date").toString();
 //               String datee=df.format(t);
 //                System.out.println(datee+"date aaaa");
                  
@@ -139,6 +139,7 @@ public class ExamenService {
         return listExam;
         }
         
+          
     
     ////////////////////////////inscription examens ///////////////////////
     public void addinscri(InscripExam e ,Examen ex) {
@@ -164,5 +165,71 @@ public class ExamenService {
                     header("Authorization", "Basic " + Base64.encodeNoNewline((accountSID + ":" + authToken).getBytes())).
                     getAsJsonMap();
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
+    }
+    
+    
+          public ArrayList<InscripExam> getListMyExamen() {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://127.0.0.1:8000/mobile/mesexamens");
+
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                ExamenService sl = new ExamenService();
+                try {
+                    listi= sl.InscriExamParseJson(new String(con.getResponseData()));
+                } catch (ParseException ex) {
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        System.out.println(listi);
+        return listi;
+        }
+          
+          
+          public ArrayList<InscripExam> InscriExamParseJson(String json) throws ParseException {
+
+        ArrayList<InscripExam> listinsc = new ArrayList<>();
+
+        try {
+            JSONParser j = new JSONParser();
+
+            Map<String, Object> experiences = j.parseJSON(new CharArrayReader(json.toCharArray()));
+
+            List<Map<String, Object>> list = (List<Map<String, Object>>) experiences.get("root");
+
+            for (Map<String, Object> obj : list) {
+
+                InscripExam e = new InscripExam();
+               
+
+                float id = Float.parseFloat(obj.get("idclient").toString());
+               
+
+//                e.setIdE((int) id);
+//                e.setTitreE(obj.get("titre").toString());
+//                e.setDate(obj.get("date").toString());
+//                e.setNiveau(obj.get("niveau").toString());
+//                e.setPrixE((int) prix);
+//                e.setSupport((String) obj.get("support"));
+                
+//                String dateStr = obj.get("date").toString();
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//                Date date = sdf.parse(dateStr);
+//                sdf = new SimpleDateFormat("dd.MM.yyyy");
+//                dateStr = sdf.format(date);
+//                System.out.println(dateStr);
+
+                listinsc.add(e);
+                
+
+            }
+
+        } catch (IOException ex) {
+        }
+        //System.out.println(listEx1);
+        return listinsc;
     }
 }

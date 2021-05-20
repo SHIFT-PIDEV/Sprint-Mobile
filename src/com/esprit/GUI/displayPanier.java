@@ -8,6 +8,7 @@ package com.esprit.GUI;
 import com.codename1.components.MultiButton;
 import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
+import static com.codename1.ui.CN.execute;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
@@ -160,7 +161,7 @@ public class displayPanier {
             statsImage = selection;
         }
 
-        Button inboxButton = new Button("Inbox", inboxImage);
+        Button inboxButton = new Button("Acceuil", inboxImage);
         inboxButton.setUIID("SideCommand");
         inboxButton.getAllStyles().setPaddingBottom(0);
         Container inbox = FlowLayout.encloseMiddle(inboxButton,
@@ -170,9 +171,28 @@ public class displayPanier {
         inboxButton.addActionListener(e -> new InboxForm().show());
         hi.getToolbar().addComponentToSideMenu(inbox);
 
-        hi.getToolbar().addCommandToSideMenu("Panier", null, e -> {
-            displayPanier a = new displayPanier(res);
+         hi.getToolbar().addCommandToSideMenu("Examens", null, e -> {
+            displayExams a = new displayExams(res);
             a.hi.show();
+        });
+       hi.getToolbar().addCommandToSideMenu("Mes Examens", null, e -> {
+            // execute("http://127.0.0.1:8000/inscripexam/inscripexam/mesexamens");
+            displayMyExams dc = new displayMyExams(res);
+        });
+        hi.getToolbar().addCommandToSideMenu("Cours", null, e -> {
+            displayCours dc= new displayCours(res);
+        });
+         hi.getToolbar().addCommandToSideMenu("Packages", null, e -> {
+            displayPackages dc= new displayPackages(res);
+        });
+           hi.getToolbar().addCommandToSideMenu("Demande", null, e -> {
+              displayDemande dc= new displayDemande(res);
+        });
+             hi.getToolbar().addCommandToSideMenu("Reclamtion", null, e -> {
+              displayReclamation dc= new displayReclamation(res);
+        });
+          hi.getToolbar().addCommandToSideMenu("Panier", null, e -> {
+              displayPanier dc= new displayPanier(res);
         });
 
     }
