@@ -27,6 +27,13 @@ import com.mycompany.services.InscriEventS;
 import com.mycompany.services.LikeS;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import com.sun.mail.smtp.SMTPTransport;
 
 /**
  *
@@ -34,7 +41,37 @@ import java.util.ArrayList;
  */
 class EventDetails extends Form {
   public Event event; 
-  
+  public void sendEmail(String email) {
+        try {
+            Properties props = new Properties();
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtps.host", "smtp.gmail.com");
+            props.put("mail.smtps.auth", "true");
+
+            Session session = Session.getInstance(props, null);
+
+            MimeMessage msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("UPGRADI <monEmail@domaine.com>"));
+            msg.setRecipients(Message.RecipientType.TO, email);
+            msg.setSubject("[Succes] Confirmation Inscription");
+            msg.setSentDate(new Date(System.currentTimeMillis()));
+
+            String txt = "Bienvenue Mr/Mme "+Login.client.getPrenom()+" "+Login.client.getPrenom()+  
+                ", votre demande d'inscription a été acceptée pour l'event "+this.event.getNomE()+"  "+
+               "l'event sera le "+this.event.getDateD()+ " à "+this.event.getDuree()+" H";
+            msg.setText(txt);
+
+            SMTPTransport st = (SMTPTransport) session.getTransport("smtps");
+            st.connect("smtp.gmail.com", 465, "hamdiskander5@gmail.com", "skanderhamdi200998*");
+
+            st.sendMessage(msg, msg.getAllRecipients());
+            System.out.println("server response :" + st.getLastServerResponse());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
   public EventDetails(String title,Event e) {
       super(title);
       this.event=e;
@@ -117,11 +154,7 @@ class EventDetails extends Form {
             if(list.isEmpty()){
                 
                  ies.sinscrire(i);
-               /* try {
-                    this.sendMail(Login.client);
-                } catch (MessagingException ex) {
-                    Logger.getLogger(EventDetails.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+             this.sendEmail(Login.client.getEmail());
             String ss="votre inscription à l'événement <<"+this.event.getNomE()+
                 ">> a été enregistrée avec succès mr "+Login.client.getPrenom()+" please click here to check your mail";
             Dialog.show("Success!", ss, "OK", null);
